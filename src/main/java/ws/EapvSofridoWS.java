@@ -22,7 +22,7 @@ import rn.EapvSofridoRN;
  *
  * @author 631610042
  */
-@Path("eapvSofrido")
+@Path("eapvsofrido")
 public class EapvSofridoWS {
 
     EapvSofridoRN eapvSofridoRN;
