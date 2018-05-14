@@ -34,6 +34,7 @@ public class ApplicationConfig extends Application {
         resources.add(ws.EapvSofridoWS.class);
         resources.add(ws.EapvWS.class);
         resources.add(ws.PacienteWS.class);
+        resources.add(ws.VacinaWS.class);
     }
     
 }
