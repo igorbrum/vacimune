@@ -36,6 +36,7 @@ public class ApplicationConfig extends Application {
         resources.add(ws.PacienteWS.class);
         resources.add(ws.VacinaAplicadaWS.class);
         resources.add(ws.VacinaWS.class);
+        resources.add(ws.WatsonWS.class);
     }
     
 }
