@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -26,8 +25,8 @@ public class Paciente implements Serializable {
     private Long cpf;
     private String nome, dataNascimento, email;
     
-    @OneToMany
-    private List<VacinaAplicada> vacinaAplicada;
+    /*@OneToMany
+    private List<VacinaAplicada> vacinaAplicada;*/
 
     public Long getId() {
         return id;
@@ -69,13 +68,13 @@ public class Paciente implements Serializable {
         this.email = email;
     }
 
-    public List<VacinaAplicada> getVacinaAplicada() {
+    /*public List<VacinaAplicada> getVacinaAplicada() {
         return vacinaAplicada;
     }
 
     public void setVacinaAplicada(List<VacinaAplicada> vacinaAplicada) {
         this.vacinaAplicada = vacinaAplicada;
-    }
+    }*/
 
     
 
