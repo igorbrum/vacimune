@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="VacimuniPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>entity.Doenca</class>
+    <class>entity.Eapv</class>
+    <class>entity.EapvSofrido</class>
+    <class>entity.Paciente</class>
+    <class>entity.Vacina</class>
+    <class>entity.VacinaAplicada</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <!--<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/vacimune"/>
+      <property name="javax.persistence.jdbc.user" value="postgres"/>
+      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="admin"/>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>-->
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://ec2-23-23-248-192.compute-1.amazonaws.com:5432/d18iap9743dm6b"/>
+      <property name="javax.persistence.jdbc.user" value="zikydcsffutftg"/>
+      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="05b63cc304cbb7ab57e3bc2a98d5187810ceaf31f29aae95b7a16e7ceb5fda21"/>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+    </properties>
+  </persistence-unit>
+</persistence>
