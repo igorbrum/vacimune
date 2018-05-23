@@ -15,6 +15,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import rn.EapvRN;
 
 /**
@@ -108,14 +109,24 @@ public class EapvWS {
         }
     }
 
-    @GET
+    /*@GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Eapv> getEapvs() {
         return (eapvRN.listar());
-
+    }*/
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getEapvs() {
+        List<Eapv> eapv = eapvRN.listar();
+        return Response.ok()
+                .entity(eapv)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET")
+                .allow("OPTIONS").build();
     }
 
-    @POST
+    /*@POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Eapv adicionar(Eapv eapv,
@@ -130,16 +141,48 @@ public class EapvWS {
             throw new javax.ws.rs.InternalServerErrorException();
         }
         return eapv;
+    }*/
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response adicionar(Eapv eapv, @Context HttpServletResponse response) {
+
+        eapvRN.inserir(eapv);
+        response.setStatus(HttpServletResponse.SC_CREATED);
+        
+        try {
+            response.flushBuffer();
+        } catch (IOException ex) {
+            throw new javax.ws.rs.InternalServerErrorException();
+        }
+        return Response.ok()
+                .entity(eapv)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "POST")
+                .allow("OPTIONS").build();
     }
 
-    @GET
+    /*@GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Eapv getEapvPorId(@PathParam("id") Long id) {
         return eapvRN.buscarPorId(id);
+    }*/
+    
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getEapvPorId(@PathParam("id") Long id) {
+        Eapv eapv = eapvRN.buscarPorId(id);
+        return Response.ok()
+                .entity(eapv)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET")
+                .allow("OPTIONS").build();
     }
 
-    @PUT
+    /*@PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -148,13 +191,39 @@ public class EapvWS {
         eapv.setId(id);
         Eapv eapvAtualizado = eapvRN.atualizar(eapv);
         return eapvAtualizado;
+    }*/
+    
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response atualizar(@PathParam("id") Long id, Eapv eapv){
+        eapv.setId(id);
+        Eapv eapvAtualizado = eapvRN.atualizar(eapv);
+        return Response.ok()
+                .entity(eapvAtualizado)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "PUT")
+                .allow("OPTIONS").build();
     }
     
-    @DELETE
+    /*@DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Eapv deletar(@PathParam("id") Long id){
         Eapv eapvDeletado = eapvRN.deletar(id);
         return eapvDeletado;
+    }*/
+    
+    @DELETE
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deletar(@PathParam("id") Long id){
+        Eapv eapvDeletado = eapvRN.deletar(id);
+        return Response.ok()
+                .entity(eapvDeletado)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "DELETE")
+                .allow("OPTIONS").build();
     }
 }

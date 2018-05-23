@@ -15,6 +15,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import rn.VacinaAplicadaRN;
 
 /**
@@ -37,15 +38,19 @@ public class VacinaAplicadaWS {
         vacinaAplicadaRN = new VacinaAplicadaRN();
 
     }
-
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<VacinaAplicada> getVacinaAplicadas() {
-        return (vacinaAplicadaRN.listar());
-
+    public Response getVacinaAplicadas(){
+        List<VacinaAplicada> vacinaAplicada = vacinaAplicadaRN.listar();
+        return Response.ok()
+                .entity(vacinaAplicada)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET")
+                .allow("OPTIONS").build();
     }
-
-    @POST
+    
+    /*@POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public VacinaAplicada adicionar(VacinaAplicada vacinaAplicada,
@@ -60,16 +65,49 @@ public class VacinaAplicadaWS {
             throw new javax.ws.rs.InternalServerErrorException();
         }
         return vacinaAplicada;
+    }*/
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response adicionar(VacinaAplicada vacinaAplicada, @Context HttpServletResponse response) {
+        
+        vacinaAplicadaRN.inserir(vacinaAplicada);
+        response.setStatus(HttpServletResponse.SC_CREATED);
+        
+        try {
+            response.flushBuffer();
+        } catch (IOException ex) {
+            throw new javax.ws.rs.InternalServerErrorException();
+        }
+        
+        return Response.ok()
+                .entity(vacinaAplicada)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "POST")
+                .allow("OPTIONS").build();
     }
 
-    @GET
+    /*@GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public VacinaAplicada getVacinaAplicadaPorId(@PathParam("id") Long id) {
         return vacinaAplicadaRN.buscarPorId(id);
+    }*/
+    
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getVacinaAplicadaPorId(@PathParam("id") Long id) {
+        VacinaAplicada vacinaAplicada = vacinaAplicadaRN.buscarPorId(id);
+        return Response.ok()
+                .entity(vacinaAplicada)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET")
+                .allow("OPTIONS").build();
     }
 
-    @PUT
+    /*@PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -78,13 +116,39 @@ public class VacinaAplicadaWS {
         vacinaAplicada.setId(id);
         VacinaAplicada vacinaAplicadaAtualizado = vacinaAplicadaRN.atualizar(vacinaAplicada);
         return vacinaAplicadaAtualizado;
+    }*/
+    
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response atualizar(@PathParam("id") Long id, VacinaAplicada vacinaAplicada){
+        vacinaAplicada.setId(id);
+        VacinaAplicada vacinaAplicadaAtualizado = vacinaAplicadaRN.atualizar(vacinaAplicada);
+        return Response.ok()
+                .entity(vacinaAplicadaAtualizado)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "PUT")
+                .allow("OPTIONS").build();
     }
     
-    @DELETE
+    /*@DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public VacinaAplicada deletar(@PathParam("id") Long id){
         VacinaAplicada vacinaAplicadaDeletado = vacinaAplicadaRN.deletar(id);
         return vacinaAplicadaDeletado;
+    }*/
+    
+    @DELETE
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deletar(@PathParam("id") Long id){
+        VacinaAplicada vacinaAplicadaDeletado = vacinaAplicadaRN.deletar(id);
+        return Response.ok()
+                .entity(vacinaAplicadaDeletado)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "DELETE")
+                .allow("OPTIONS").build();
     }
 }
