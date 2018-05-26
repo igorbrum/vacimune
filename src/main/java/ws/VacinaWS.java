@@ -18,6 +18,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import rn.VacinaRN;
 
 /**
@@ -50,22 +51,29 @@ public class VacinaWS {
 
     }
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Vacina> getVacinas() {
+    public List<Vacina> listaVacinas() {
         return (vacinaRN.listar());
-
     }
     
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getVacinas() {
+        List<Vacina> vacina = listaVacinas();
+        return Response.ok()
+                .entity(vacina)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET")
+                .allow("OPTIONS").build();
+    }
     
     //--NOVO!!
     //@GET //para buscar por nome
-    @GET
+    /*@GET
     @Path("/query")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Vacina> getVacinas(@QueryParam("nome") String nome) {
         List<Vacina> listaVacinasBusca = new ArrayList<>();
-        for(Vacina p: getVacinas()){
+        for(Vacina p: listaVacinas()){
             if(p.getNome().contains(nome)){
                 listaVacinasBusca.add(p);
             }
@@ -74,11 +82,29 @@ public class VacinaWS {
             throw new NotFoundException();
         else
             return listaVacinasBusca;
-    } 
-    //--
+    }*/
     
-
-    @POST
+    @GET
+    @Path("/query")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getVacinas(@QueryParam("nome") String nome) {
+        List<Vacina> listaVacinasBusca = new ArrayList<>();
+        for(Vacina p: listaVacinas()){
+            if(p.getNome().contains(nome)){
+                listaVacinasBusca.add(p);
+            }
+        }
+        if(listaVacinasBusca.isEmpty())
+            throw new NotFoundException();
+        else
+            return Response.ok()
+                .entity(listaVacinasBusca)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET")
+                .allow("OPTIONS").build();
+    }
+    
+    /*@POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Vacina adicionar(Vacina vacina,
@@ -93,16 +119,48 @@ public class VacinaWS {
             throw new javax.ws.rs.InternalServerErrorException();
         }
         return vacina;
+    }*/
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response adicionar(Vacina vacina, @Context HttpServletResponse response) {
+
+        vacinaRN.inserir(vacina);
+        response.setStatus(HttpServletResponse.SC_CREATED);
+        
+        try {
+            response.flushBuffer();
+        } catch (IOException ex) {
+            throw new javax.ws.rs.InternalServerErrorException();
+        }
+        return Response.ok()
+                .entity(vacina)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "POST")
+                .allow("OPTIONS").build();
     }
 
-    @GET
+    /*@GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Vacina getVacinaPorId(@PathParam("id") Long id) {
         return vacinaRN.buscarPorId(id);
+    }*/
+    
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getVacinaPorId(@PathParam("id") Long id) {
+        Vacina vacina = vacinaRN.buscarPorId(id);
+        return Response.ok()
+                .entity(vacina)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET")
+                .allow("OPTIONS").build();
     }
 
-    @PUT
+    /*@PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -111,13 +169,39 @@ public class VacinaWS {
         vacina.setId(id);
         Vacina vacinaAtualizado = vacinaRN.atualizar(vacina);
         return vacinaAtualizado;
+    }*/
+    
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response atualizar(@PathParam("id") Long id, Vacina vacina){
+        vacina.setId(id);
+        Vacina vacinaAtualizado = vacinaRN.atualizar(vacina);
+        return Response.ok()
+                .entity(vacinaAtualizado)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "PUT")
+                .allow("OPTIONS").build();
     }
     
-    @DELETE
+    /*@DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Vacina deletar(@PathParam("id") Long id){
         Vacina vacinaDeletado = vacinaRN.deletar(id);
         return vacinaDeletado;
+    }*/
+    
+    @DELETE
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deletar(@PathParam("id") Long id){
+        Vacina vacinaDeletado = vacinaRN.deletar(id);
+        return Response.ok()
+                .entity(vacinaDeletado)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "DELETE")
+                .allow("OPTIONS").build();
     }
 }
