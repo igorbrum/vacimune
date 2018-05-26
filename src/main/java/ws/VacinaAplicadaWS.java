@@ -1,5 +1,6 @@
 package ws;
 
+import entity.Paciente;
 import entity.VacinaAplicada;
 import java.io.IOException;
 import java.util.List;
@@ -16,6 +17,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import rn.PacienteRN;
 import rn.VacinaAplicadaRN;
 
 /**
@@ -27,6 +29,7 @@ import rn.VacinaAplicadaRN;
 public class VacinaAplicadaWS {
 
     VacinaAplicadaRN vacinaAplicadaRN;
+    PacienteRN pacienteRN;
     
     @Context
     private UriInfo context;
@@ -36,7 +39,7 @@ public class VacinaAplicadaWS {
      */
     public VacinaAplicadaWS() {
         vacinaAplicadaRN = new VacinaAplicadaRN();
-
+        pacienteRN = new PacienteRN();
     }
     
     @GET
@@ -149,6 +152,20 @@ public class VacinaAplicadaWS {
                 .entity(vacinaAplicadaDeletado)
                 .header("Access-Control-Allow-Origin", "*")
                 .header("Access-Control-Allow-Methods", "DELETE")
+                .allow("OPTIONS").build();
+    }
+    
+    @GET
+    @Path("/paciente/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buscarPaciente(@PathParam("id") Long id){
+        Paciente paciente = pacienteRN.buscarPorId(id);
+        List<VacinaAplicada> vacinaAplicada = vacinaAplicadaRN.buscarPacientePorID(paciente.getId());
+        //VacinaAplicada vacinaAplicada = vacinaAplicadaRN.buscarPorId(paciente.getId());
+        return Response.ok()
+                .entity(vacinaAplicada)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET")
                 .allow("OPTIONS").build();
     }
 }
