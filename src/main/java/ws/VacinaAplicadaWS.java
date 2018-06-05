@@ -168,4 +168,17 @@ public class VacinaAplicadaWS {
                 .header("Access-Control-Allow-Methods", "GET")
                 .allow("OPTIONS").build();
     }
+    
+    @GET
+    @Path("/vacina/paciente/{cpf}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response buscarPacienteCPF(@PathParam("cpf") Long cpf){
+        Paciente paciente = pacienteRN.buscarCPF(cpf);
+        List<VacinaAplicada> vacinaAplicada = vacinaAplicadaRN.buscarPacientePorCPF(cpf);
+        return Response.ok()
+                .entity(vacinaAplicada)
+                .header("Access-Control-Allow-Origin", "*")
+                .header("Access-Control-Allow-Methods", "GET")
+                .allow("OPTIONS").build();
+    }
 }

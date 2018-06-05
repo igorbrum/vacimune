@@ -78,7 +78,14 @@ public class VacinaAplicadaRN {
 
     public List<VacinaAplicada> buscarPacientePorID(Long id) {
         EntityManager manager = JPAUtil.createManager();
-        Query query = manager.createQuery("SELECT c FROM VacinaAplicada c WHERE c.paciente.id = 107");
+        Query query = manager.createQuery("SELECT c FROM VacinaAplicada c WHERE c.paciente.id = "+id);
+        List<VacinaAplicada> listaVacinaAplicadas = query.getResultList();
+        return listaVacinaAplicadas;
+    }
+    
+    public List<VacinaAplicada> buscarPacientePorCPF(Long cpf){
+        EntityManager manager = JPAUtil.createManager();
+        Query query = manager.createQuery("SELECT c FROM VacinaAplicada c WHERE c.paciente.cpf = "+cpf);
         List<VacinaAplicada> listaVacinaAplicadas = query.getResultList();
         return listaVacinaAplicadas;
     }

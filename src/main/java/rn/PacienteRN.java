@@ -40,6 +40,13 @@ public class PacienteRN {
         manager.close();
         return paciente;
     }
+    
+    public Paciente buscarCPF(Long cpf){
+        EntityManager manager = JPAUtil.createManager();
+        Paciente paciente = manager.find(Paciente.class, cpf);
+        manager.close();
+        return paciente;
+    }
 
     public Paciente atualizar(Paciente paciente) {
         EntityManager manager = JPAUtil.createManager();
