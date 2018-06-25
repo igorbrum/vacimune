@@ -48,9 +48,9 @@ public class WatsonWS {
         return Response.ok()
                 .entity(resposta)
                 .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Origin", "Content-Type")
-                //.header("Content-Type", "application/json")
-                .header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS")
+                //.header("Access-Control-Allow-Origin", "Content-Type")
+                .header("Access-Control-Allow-Methods", "*")
+                .header("Access-Control-Allow-Methods", "Content-Type")
                 .allow("OPTIONS").build();
     }
 }
