@@ -300,15 +300,25 @@ public class InsercoesIniciaisRN {
     
     private void insertDoseVacinaAplicada(){
         doseVacinaAplicadaRN = new DoseVacinaAplicadaRN();
+        
         if(doseVacinaAplicadaRN.listar().isEmpty()){
-            //criando doseVacinaAplicada1
-            // Claudete - id = 3, tomou a vacina contra hepatite B, ao nascer (1a dose - id=8), e teve febre >= 39
             List<EapvSofrido> listaEapvSofrido1 = new ArrayList<>();
+            
+            eapvSofridoRN = new EapvSofridoRN();
             listaEapvSofrido1.add(eapvSofridoRN.buscarPorId(Long.valueOf(2))); // 2 = febre >= 39
-            doseVacinaAplicadaRN.inserir(new DoseVacinaAplicada(Long.valueOf(1), 
-                "03/03/1977", doseVacinaRN.buscarPorId(Long.valueOf(8)), // 8 = HB, 1a dose
-                pacienteRN.buscarPorId(Long.valueOf(3)), // 3 = claudete
-                listaEapvSofrido1 )); 
+            
+            doseVacinaRN = new DoseVacinaRN();
+            pacienteRN = new PacienteRN();
+            
+            doseVacinaAplicadaRN.inserir(
+                    new DoseVacinaAplicada(
+                        Long.valueOf(1), 
+                        "03/03/1977",
+                        doseVacinaRN.buscarPorId(Long.valueOf(8)), // 8 = HB, 1a dose
+                        pacienteRN.buscarPorId(Long.valueOf(3)), // 3 = claudete
+                        listaEapvSofrido1
+                    )
+            ); 
         }
     }
     
