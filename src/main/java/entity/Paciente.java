@@ -2,12 +2,10 @@ package entity;
 
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -24,9 +22,17 @@ public class Paciente implements Serializable {
     private Long id;
     private Long cpf;
     private String nome, dataNascimento, email;
-    
-    /*@OneToMany
-    private List<VacinaAplicada> vacinaAplicada;*/
+
+    public Paciente(Long id, Long cpf, String nome, String dataNascimento, String email) {
+        this.id = id;
+        this.cpf = cpf;
+        this.nome = nome;
+        this.dataNascimento = dataNascimento;
+        this.email = email;
+    }
+
+    public Paciente() {
+    }
 
     public Long getId() {
         return id;
@@ -68,15 +74,6 @@ public class Paciente implements Serializable {
         this.email = email;
     }
 
-    /*public List<VacinaAplicada> getVacinaAplicada() {
-        return vacinaAplicada;
-    }
-
-    public void setVacinaAplicada(List<VacinaAplicada> vacinaAplicada) {
-        this.vacinaAplicada = vacinaAplicada;
-    }*/
-
-    
 
     @Override
     public int hashCode() {
@@ -100,7 +97,7 @@ public class Paciente implements Serializable {
 
     @Override
     public String toString() {
-        return "entidade.CarrinhoDeCompras[ id=" + id + " ]";
+        return "entidade.Paciente[ id=" + id + " ]";
     }
     
 }

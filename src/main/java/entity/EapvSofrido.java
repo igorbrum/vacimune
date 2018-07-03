@@ -32,6 +32,14 @@ public class EapvSofrido implements Serializable {
     //@ManyToMany
     //private List<VacinaAplicada> vacinaAplicada;
 
+    public EapvSofrido(Long id, Eapv eapv) {
+        this.id = id;
+        this.eapv = eapv;
+    }
+
+    public EapvSofrido() {
+    }
+    
     public Long getId() {
         return id;
     }
@@ -47,8 +55,6 @@ public class EapvSofrido implements Serializable {
     public void setEapv(Eapv eapv) {
         this.eapv = eapv;
     }
-
-
     
     @Override
     public int hashCode() {
@@ -72,7 +78,7 @@ public class EapvSofrido implements Serializable {
 
     @Override
     public String toString() {
-        return "entidade.Endereco[ id=" + id + " ]";
+        return "entidade.EapvSofrido[ id=" + id + " ]";
     }
     
 }

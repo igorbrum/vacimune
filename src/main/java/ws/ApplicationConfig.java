@@ -31,9 +31,12 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(org.glassfish.jersey.server.wadl.internal.WadlResource.class);
         resources.add(ws.DoencaWS.class);
+        resources.add(ws.DoseVacinaAplicadaWS.class);
+        resources.add(ws.DoseVacinaWS.class);
         resources.add(ws.EapvSofridoWS.class);
         resources.add(ws.EapvWS.class);
         resources.add(ws.PacienteWS.class);
+        resources.add(ws.UnidadeSaudeWS.class);
         resources.add(ws.VacinaAplicadaWS.class);
         resources.add(ws.VacinaWS.class);
         resources.add(ws.WatsonWS.class);

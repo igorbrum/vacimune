@@ -8,6 +8,9 @@
     <class>entity.Paciente</class>
     <class>entity.Vacina</class>
     <class>entity.VacinaAplicada</class>
+    <class>entity.DoseVacina</class>
+    <class>entity.DoseVacinaAplicada</class>
+    <class>entity.UnidadeSaude</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <!--<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/vacimune"/>
