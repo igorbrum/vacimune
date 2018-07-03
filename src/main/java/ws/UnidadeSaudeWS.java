@@ -39,6 +39,7 @@ public class UnidadeSaudeWS {
      */
     public UnidadeSaudeWS() {
         insere = new InsercoesIniciaisRN();
+        insere.escolhaOpcao("unidadessaude");
         unidadeSaudeRN = new UnidadeSaudeRN();
         /*if(unidadeSaudeRN.listar().isEmpty()){
             unidadeSaudeRN.inserir(new UnidadeSaude(Long.valueOf(1),"Caxumba"));

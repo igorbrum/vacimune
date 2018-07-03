@@ -42,6 +42,7 @@ public class DoseVacinaAplicadaWS {
      */
     public DoseVacinaAplicadaWS() {
         insere = new InsercoesIniciaisRN();
+        insere.escolhaOpcao("dosevacinaaplicada");
         doseVacinaAplicadaRN = new DoseVacinaAplicadaRN();
         //eapvSofridoRN = new EapvSofridoRN();
         //pacienteRN = new PacienteRN();

@@ -38,6 +38,7 @@ public class DoseVacinaWS {
      */
     public DoseVacinaWS() {
         insere = new InsercoesIniciaisRN();
+        insere.escolhaOpcao("dosevacina");
         doseVacinaRN = new DoseVacinaRN();
         
         if(doseVacinaRN.listar().isEmpty()){

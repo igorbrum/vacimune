@@ -32,24 +32,42 @@ public class InsercoesIniciaisRN {
      * Creates a new instance of PacienteWS
      */
     public InsercoesIniciaisRN() {
-        pacienteRN = new PacienteRN();
-        doencaRN = new DoencaRN();
-        eapvRN = new EapvRN();
-        vacinaRN = new VacinaRN();
-        doseVacinaRN = new DoseVacinaRN();
-        doseVacinaAplicadaRN = new DoseVacinaAplicadaRN();
-        eapvSofridoRN = new EapvSofridoRN();
-        unidadeSaudeRN = new UnidadeSaudeRN();
         
-        
-        //Cria pacientes para teste posterior:
-        if(pacienteRN.listar().isEmpty()){
-            pacienteRN.inserir(new Paciente(Long.valueOf(1), Long.parseLong("12345678911"), "Marcelino Pao e Vinho", "01/01/1991", "paoevinho@hotmail.com"));
-            pacienteRN.inserir(new Paciente(Long.valueOf(2), Long.parseLong("99999999999"), "Aristides Bergamota", "04/11/1991", "bergamota@hotmail.com"));
-            pacienteRN.inserir(new Paciente(Long.valueOf(3), Long.parseLong("2987898091"), "Claudete da Silva", "03/03/1977", "claudete777@hotmail.com"));
+    }
+    
+    public void escolhaOpcao(String opcao){
+        switch(opcao){
+            case "doenca":
+                insertDoenca();
+                break;
+            case "eapv":
+                insertEapv();
+                break;
+            case "paciente":
+                insertPaciente();
+                break;
+            case "vacina":
+                insertVacina();
+                break;
+            case "dosevacina":
+                insertDoseVacina();
+                break;
+            case "eapvsofrido":
+                insertEapvSofrido();
+                break;
+            case "dosevacinaaplicada":
+                insertDoseVacinaAplicada();
+                break;
+            case "unidadessaude":
+                insertUnidadeSaude();
+                break;
+            default:
+                System.out.println("Ops");
         }
-        
-        //Cria doencas:
+    }
+    
+    private void insertDoenca(){
+        doencaRN = new DoencaRN();
         if(doencaRN.listar().isEmpty()){
             doencaRN.inserir(new Doenca(Long.valueOf(1),"Caxumba"));
             doencaRN.inserir(new Doenca(Long.valueOf(2),"Difteria"));
@@ -72,8 +90,10 @@ public class InsercoesIniciaisRN {
             doencaRN.inserir(new Doenca(Long.valueOf(19),"Sinusite"));
             doencaRN.inserir(new Doenca(Long.valueOf(20),"Catapora (sinonimo de Varicela)"));
         }
-        
-        // Cria EAPVs existentes
+    }
+    
+    private void insertEapv(){
+        eapvRN = new EapvRN();
         if(eapvRN.listar().isEmpty()){
             // Fonte: pni.datasus.gov.br/Download/Eapv/Ficha_eventos_adversos.doc
             // Segui os codigos oficiais do Ministerio da Saude para os EAPV
@@ -143,10 +163,19 @@ public class InsercoesIniciaisRN {
             eapvRN.inserir(new Eapv(Long.valueOf(4),"Ulcera > 1 cm apos BCG"));
             eapvRN.inserir(new Eapv(Long.valueOf(67),"Urticaria generalizada"));
         }
-        
-        //Cria vacinas existentes:
-        // Como adicionar vacina que contem uma doenca? Deve verificar se a doenca jah esta contida... 
-        //se estiver, usa ela, senao, cria...
+    }
+    
+    private void insertPaciente(){
+        pacienteRN = new PacienteRN();
+        if(pacienteRN.listar().isEmpty()){
+            pacienteRN.inserir(new Paciente(Long.valueOf(1), Long.parseLong("12345678911"), "Marcelino Pao e Vinho", "01/01/1991", "paoevinho@hotmail.com"));
+            pacienteRN.inserir(new Paciente(Long.valueOf(2), Long.parseLong("99999999999"), "Aristides Bergamota", "04/11/1991", "bergamota@hotmail.com"));
+            pacienteRN.inserir(new Paciente(Long.valueOf(3), Long.parseLong("2987898091"), "Claudete da Silva", "03/03/1977", "claudete777@hotmail.com"));
+        }
+    }
+    
+    private void insertVacina(){
+        vacinaRN = new VacinaRN();
         if(vacinaRN.listar().isEmpty()){
             //criando vacina Antimeningococica
             List<Doenca> listaDoenca1 = new ArrayList<>();
@@ -240,10 +269,13 @@ public class InsercoesIniciaisRN {
             listaDoenca18.add(doencaRN.buscarPorId(Long.valueOf(10)));
             vacinaRN.inserir(new Vacina(Long.valueOf(17), "Vacina contra difteria, tetano e pertussis acelular (dTpa) - triplice bacteriana adulto", 1, listaDoenca18) );
         }
-        
-        //Cria doseVacina
+    }
+    
+    private void insertDoseVacina(){
+        doseVacinaRN = new DoseVacinaRN();
         if(doseVacinaRN.listar().isEmpty()){
             //criar todas doseVacina1 possiveis
+            VacinaRN vacinaRN = new VacinaRN();
             List<Vacina> listaVacinas = vacinaRN.listar();
             int k = 1;
             int idadeAplicacaoMes;
@@ -255,15 +287,19 @@ public class InsercoesIniciaisRN {
                 }
             }
         }
-        
-        //Cria eapvSofrido
+    }
+    
+    private void insertEapvSofrido(){
+        eapvSofridoRN = new EapvSofridoRN();
         if(eapvSofridoRN.listar().isEmpty()){
             //criar eapvSofrido hipoteticos
             eapvSofridoRN.inserir(new EapvSofrido(Long.valueOf(1), eapvRN.buscarPorId(Long.valueOf(29)))); // dor, rubor e calor
             eapvSofridoRN.inserir(new EapvSofrido(Long.valueOf(2), eapvRN.buscarPorId(Long.valueOf(10)))); // febre >= 39
         }
-        
-        //Cria doseVacinaAplicada
+    }
+    
+    private void insertDoseVacinaAplicada(){
+        doseVacinaAplicadaRN = new DoseVacinaAplicadaRN();
         if(doseVacinaAplicadaRN.listar().isEmpty()){
             //criando doseVacinaAplicada1
             // Claudete - id = 3, tomou a vacina contra hepatite B, ao nascer (1a dose - id=8), e teve febre >= 39
@@ -274,19 +310,17 @@ public class InsercoesIniciaisRN {
                 pacienteRN.buscarPorId(Long.valueOf(3)), // 3 = claudete
                 listaEapvSofrido1 )); 
         }
-        
-        //Cria unidades de saude de Porto Alegre para teste posterior de geolocalizacao:
-        // para pegar unidades de vacinacao: https://gauchazh.clicrbs.com.br/porto-alegre/noticia/2018/04/confira-a-lista-de-postos-onde-e-possivel-se-vacinar-contra-a-gripe-na-capital-cjgb91hyr029b01qlsig7zrb0.html
-        // para pegar latitudes e longitudes: http://localizarlatitudelongitude.com.br/
+    }
+    
+    private void insertUnidadeSaude(){
+        unidadeSaudeRN = new UnidadeSaudeRN();
         if(unidadeSaudeRN.listar().isEmpty()){
             unidadeSaudeRN.inserir(new UnidadeSaude(Long.valueOf(1), "Centro de Saude Santa Marta", "(51) 3289-2900", -30.0285033, -51.232530999999994));   
             unidadeSaudeRN.inserir(new UnidadeSaude(Long.valueOf(2), "Unidade Basica de Saude Santa Cecilia", "(51) 3359-8685", -30.0386913, -51.20532530000003));   
             unidadeSaudeRN.inserir(new UnidadeSaude(Long.valueOf(3), "Centro de Saude Modelo", "(51) 3359-8685", -30.04321509999999, -51.213823400000024));   
             unidadeSaudeRN.inserir(new UnidadeSaude(Long.valueOf(4), "Pronto Atendimento Bom Jesus", "(51) 3289-5408", -30.04322059999999, -51.153921500000024));
-    }
-        
-}
-    
+        }
+    }    
 
     private int defineIdadeAplicacaoMes(Vacina vac, int j) {
         int idadeAplicacaoMes = -1;
