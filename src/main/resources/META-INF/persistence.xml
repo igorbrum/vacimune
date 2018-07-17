@@ -18,10 +18,12 @@
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
       <property name="javax.persistence.jdbc.password" value="admin"/>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>-->
-      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://ec2-23-23-248-192.compute-1.amazonaws.com:5432/d18iap9743dm6b"/>
-      <property name="javax.persistence.jdbc.user" value="zikydcsffutftg"/>
+      
+      <!--<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://ec2-23-23-248-192.compute-1.amazonaws.com:5432/d18iap9743dm6b"/>-->
+      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://ec2-50-19-105-188.compute-1.amazonaws.com:5432/dej42alhuttf4k"/>
+      <property name="javax.persistence.jdbc.user" value="ckgvwuiokkzvpn"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="05b63cc304cbb7ab57e3bc2a98d5187810ceaf31f29aae95b7a16e7ceb5fda21"/>
+      <property name="javax.persistence.jdbc.password" value="f7a2c1ce12dc8dac8f78d23266441abd8dbc304c91fb5e0f0f9673c13a76f829"/>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>
   </persistence-unit>

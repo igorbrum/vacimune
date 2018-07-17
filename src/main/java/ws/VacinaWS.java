@@ -19,6 +19,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import rn.InsercoesIniciaisRN;
 import rn.VacinaRN;
 
 /**
@@ -30,6 +31,7 @@ import rn.VacinaRN;
 public class VacinaWS {
 
     VacinaRN vacinaRN;
+    InsercoesIniciaisRN insere;
     //DoencaRN doencaRN;
     //private static int autoIncr = 1;
     
@@ -42,6 +44,9 @@ public class VacinaWS {
      */
     public VacinaWS() {
         vacinaRN = new VacinaRN();
+        //InsercoesIniciaisRN insert = new InsercoesIniciaisRN();
+        insere = new InsercoesIniciaisRN();
+        //insert.escolhaOpcao("vacina");
         
         // Como adicionar vacina que contem uma doenca? Deve verificar se a doenca jah esta contida... 
         //se estiver, usa ela, senao, cria...
